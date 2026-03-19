@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function GoalInput(props) {
     const [goalText, setGoalText] = useState("");
@@ -10,35 +10,39 @@ export default function GoalInput(props) {
 
     function addGoalHandler() {
         props.onAddGoal(goalText);
+        setGoalText("");
     }
 
     return (
-        <View style={styles.inputContainer}>
-            <TextInput placeholder="Enter goal" style={styles.input} onChangeText={goalInputHandler} />
-            <Pressable onPress={addGoalHandler} style={styles.primary_btn}>
-                <Text style={styles.primary_btn_text}>+</Text>
-            </Pressable>
-        </View>
+        <Modal visible={props.visible} animationType='fade'>
+            <View style={styles.inputContainer}>
+                <TextInput placeholder="Enter goal" style={styles.input} onChangeText={goalInputHandler} />
+                <View style={styles.buttonContainer}>
+                    <Pressable onPress={addGoalHandler} style={styles.primary_btn}>
+                        <Text style={styles.primary_btn_text}>+</Text>
+                    </Pressable>
+                    <Pressable onPress={props.onCancel} style={styles.primary_btn}>
+                        <Text style={styles.primary_btn_text}>x</Text>
+                    </Pressable>
+                </View>
+            </View>
+        </Modal>
     );
 }
 
 const styles = StyleSheet.create({
     inputContainer: {
-        flexDirection: "row",
-        justifyContent: "space-around",
+        flex: 1,
+        justifyContent: "center",
         alignItems: "center",
-        marginBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#000000ff',
-        paddingBottom: 10,
         width: '100%',
     },
     input: {
-        flex: 1,
         borderWidth: 1,
         borderColor: '#000000ff',
         padding: 10,
-        marginRight: 10,
+        width: '80%',
+        marginBottom: 10,
     },
     primary_btn: {
         borderWidth: 1,
@@ -52,4 +56,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        gap: 20,
+    }
 });
