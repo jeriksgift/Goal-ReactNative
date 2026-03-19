@@ -3,14 +3,15 @@ import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Index() {
   const [goalText, setGoalText] = useState("");
-  const [goals, setGoals] = useState<string[]>([]);
+  const [goals, setGoals] = useState([]);
 
-  function goalInputHandler(text: string) {
+  function goalInputHandler(text) {
     setGoalText(text);
   }
 
   function goalAddHandler() {
-    setGoals((currentGoals: string[]) => [...currentGoals, goalText]);
+    setGoals((currentGoals) => [...currentGoals, goalText]);
+    console.log(currentGoals)
   }
 
   return (
@@ -20,7 +21,7 @@ export default function Index() {
         <Button title="+" onPress={goalAddHandler} />
       </View>
       <View>
-        <Text>List of goals</Text>
+        
       </View>
     </View>
   );
